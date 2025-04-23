@@ -10,3 +10,6 @@ vim.keymap.set("n", "<F6>", ":let @+ = expand('%:p')<CR>")
 vim.keymap.set("i", "<F6>", "<Esc> :let @+ = expand('%:p')<CR>i")
 
 vim.keymap.set("","<F2>", ":NvimTreeOpen<CR>")
+
+
+vim.keymap.set("n","<leader>fi", ":Telescope find_files no_ignore=true<CR>")
