@@ -13,3 +13,9 @@ vim.keymap.set("","<F2>", ":NvimTreeOpen<CR>")
 
 
 vim.keymap.set("n","<leader>fi", ":Telescope find_files no_ignore=true<CR>")
+
+
+-- Custom Modules
+vim.keymap.set('n', '<leader>i', function()
+	     require('user.checkLine').checkLine()
+	     end, { desc = 'Checkbox a line' })
