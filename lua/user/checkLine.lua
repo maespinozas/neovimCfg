@@ -1,12 +1,12 @@
 local M = {}
 
 local strTest1 = {"Test string", "[ ] Test String 2", "[x] Test String 3"}
-table.insert(strTest1, "		[][ ][ ] Test String x")
+table.insert(strTest1, "		[]Test String x")
 
 function M.markString(s)
 	local arrCheck = {"%[%]","%[ %]","%[x%]"} --need to escape [ ] characters
-	local checkboxState = { unchecked =1, checked = 2, missing =3}
-	local arrCheckDict = {[checkboxState.unchecked] ="%[%]",[checkboxState.unchecked]="%[ %]",
+	local checkboxState = { unchecked1 =1, unchecked2=2, checked = 3, missing =4}
+	local arrCheckDict = {[checkboxState.unchecked1] ="%[%]",[checkboxState.unchecked2]="%[ %]",
 	[checkboxState.checked]="%[x%]"} --need to escape [ ] characters
 	local search, searchend = nil, nil
 	local updatedString = nil
@@ -25,27 +25,27 @@ function M.markString(s)
 			local sub = v.gsub(v, "%%", "")
 			print(sub)	--this will print only first return value of gsub
 			print(v.gsub(v, "%%", "")) --replace %% with ""
-			if i == checkboxState.unchecked then
+			if i == checkboxState.unchecked1  or i == checkboxState.unchecked2 then
 			--	print("##checking line##)
 			--	print(string.sub(s,searchend+1,#(s)))
 				updatedString =  arrCheckDict[checkboxState.checked]..string.sub(s,searchend+1,#(s))
 				updatedString = string.gsub(updatedString,"%%","")
 				--print(updatedString)
 			elseif i == checkboxState.checked then
-				updatedString = arrCheckDict[checkboxState.unchecked]..string.sub(s,searchend+1,#(s))
+				updatedString = arrCheckDict[checkboxState.unchecked2]..string.sub(s,searchend+1,#(s))
 				updatedString = string.gsub(updatedString,"%%","")
 				--print(updatedString)
 			end
 			break
 		else
-				updatedString = arrCheckDict[checkboxState.unchecked]..string.sub(s,1,#(s))
+				updatedString = arrCheckDict[checkboxState.unchecked2]..string.sub(s,1,#(s))
 				updatedString = string.gsub(updatedString,"%%","")
 				--print(updatedString)
 		end
 	end
 	if search == nil then
 		print("marker strings not found")
-		updatedString = arrCheckDict[checkboxState.unchecked] .. s
+		updatedString = arrCheckDict[checkboxState.unchecked2] .. s
 		updatedString = string.gsub(updatedString,"%%","")
 	elseif leadingSpaces ~= nil then
 		updatedString = leadingSpaces .. updatedString
