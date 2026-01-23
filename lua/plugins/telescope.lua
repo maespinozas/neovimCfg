@@ -21,6 +21,19 @@ return {
 
       vim.keymap.set("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 
+      -- Search INCLUDING git-ignored files
+      vim.keymap.set('n', '<leader>fF', function()
+	builtin.find_files({
+	  find_command = {
+	    "rg",
+	    "--files",
+	    "--hidden",
+	    "--no-ignore",
+	    "--no-ignore-vcs",
+	  },
+	})
+      end, { desc = 'Find All Files (including git-ignored)' })
+
       local telescope = require("telescope")
 
 	    -- first setup telescope
