@@ -12,6 +12,13 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
-    require("nvim-tree").setup {}
+    require("nvim-tree").setup {
+      actions = {
+	open_file ={
+	  resize_window = false, -- Prevent resizing window when opening files
+	  window_picker ={ enable = false,}
+	}
+      }
+    }
   end,
 }
