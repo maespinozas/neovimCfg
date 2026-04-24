@@ -1,6 +1,8 @@
 
 local M = {
     "nvim-treesitter/nvim-treesitter",
+    branch = 'master', -- This is the critical line to keep the old version
+    lazy = false,      -- This plugin does not support lazy-loading [citation:5]
     build = function()
         require("nvim-treesitter.install").update({ with_sync = true })()
     end,
@@ -20,6 +22,7 @@ local M = {
 			"vim",
 			"vimdoc",
 		},
+	    sync_install = true,
 
 	    --Enable syntax highligthing
             highlight = {
