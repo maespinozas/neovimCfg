@@ -79,67 +79,33 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    mason_lspconfig.setup_handlers({
-      -- default handler for installed servers
-      function(server_name)
-        lspconfig[server_name].setup({
-          capabilities = capabilities,
-        })
-      end,
-      ["pyright"] = function()
-        -- configure pyright
-        lspconfig["pyright"].setup({
-          capabilities = capabilities,
-        })
-      end,
-      ["kotlin_language_server"] = function()
-        -- configure kotlin
-        lspconfig["kotlin_language_server"].setup({
-          capabilities = capabilities,
-        })
-      end,
-      ["clangd"] = function()
-        -- configure clangd
-        lspconfig["clangd"].setup({
-          capabilities = capabilities,
-        })
-      end,
-      --[[
-      ["svelte"] = function()
-        -- configure svelte server
-        lspconfig["svelte"].setup({
-          capabilities = capabilities,
-          on_attach = function(client, bufnr)
-            vim.api.nvim_create_autocmd("BufWritePost", {
-              pattern = { "*.js", "*.ts" },
-              callback = function(ctx)
-                -- Here use ctx.match instead of ctx.file
-                client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-              end,
-            })
-          end,
-        })
-      end,
-      ["graphql"] = function()
-        -- configure graphql language server
-        lspconfig["graphql"].setup({
-          capabilities = capabilities,
-          filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-        })
-      end,
-      ["emmet_ls"] = function()
-        -- configure emmet language server
-        lspconfig["emmet_ls"].setup({
-          capabilities = capabilities,
-          filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-        })
-      end,
-      --]]
+    -- Server-specific settings for pyright
+    vim.lsp.config("pyright", {
+      settings = {
+	python = {
+	  analysis = {
+	    typeCheckingMode = "basic",
+	    autoSearchPaths = true,
+	    useLibraryCodeForTypes = true,
+	  },
+	},
+      },
+    })
 
-      ["lua_ls"] = function()
-        -- configure lua server (with special settings)
-        lspconfig["lua_ls"].setup({
-          capabilities = capabilities,
+    -- Server-specific settings for kotlin_language_server
+    vim.lsp.config("kotlin_language_server", {
+      -- Add kotlin-specific settings here
+      settings = {},
+    })
+
+    -- Server-specific settings for clangd
+    vim.lsp.config("clangd", {
+      cmd = { "clangd", "--background-index" },
+      capabilities = capabilities,
+    })
+    -- Server-specific settings for lua
+    vim.lsp.config("lua_ls", {
+      capabilities = capabilities,
           settings = {
             Lua = {
               -- make the language server recognize "vim" global
@@ -151,8 +117,8 @@ return {
               },
             },
           },
-        })
-      end,
     })
+
+
   end,
 }
