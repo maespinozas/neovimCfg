@@ -4,6 +4,8 @@ local M = {
     branch = 'master', -- This is the critical line to keep the old version
     lazy = false,      -- This plugin does not support lazy-loading [citation:5]
     build = function()
+    	--set this line for Windows to use clang to compile parsers
+    	--require('nvim-treesitter.install').compilers = { "clang", "gcc" }
         require("nvim-treesitter.install").update({ with_sync = true })()
     end,
     config = function ()
