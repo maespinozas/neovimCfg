@@ -34,6 +34,25 @@ return {
 	  },
 	})
       end, { desc = 'Find All Files (including git-ignored)' })
+      
+      -- Search c files inlcuding ignored files
+       vim.keymap.set('n', '<leader>fc', function()
+	  builtin.live_grep({
+	      additional_args = function(args)
+		  -- args is a table like { '--hidden', '--no-ignore' } etc.
+		  -- Create a new table with defaults + your flags
+		  local new_args = {}
+		  for _, arg in ipairs(args) do
+		      table.insert(new_args, arg)
+		  end
+		  table.insert(new_args, '-t')
+		  table.insert(new_args, 'c')
+		  table.insert(new_args, '--no-ignore')
+		  return new_args
+	      end,
+	      prompt_title = 'Live Grep (C files, no ignore)',
+	  })
+      end, { desc = 'Telescope live grep C files (no ignore)' })
 
       local telescope = require("telescope")
 
