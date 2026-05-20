@@ -21,8 +21,14 @@ return {
       vim.keymap.set("n", "<leader>fw", live_grep_args_shortcuts.grep_word_under_cursor, { desc = 'Grep word under cursor with args'})
 
       vim.keymap.set("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
+      -- For C files with no ignore
+      vim.keymap.set("n", "<leader>fwc", function()
+	  live_grep_args_shortcuts.grep_word_under_cursor({
+	      postfix = " -t c --no-ignore"
+	  })
+      end, { desc = 'Grep word under cursor (C files, no ignore)' })
 
-      -- Search INCLUDING git-ignored files
+      -- Search Files INCLUDING git-ignored files
       vim.keymap.set('n', '<leader>fF', function()
 	builtin.find_files({
 	  find_command = {
@@ -35,7 +41,7 @@ return {
 	})
       end, { desc = 'Find All Files (including git-ignored)' })
       
-      -- Search c files inlcuding ignored files
+      -- Search c Files inlcuding ignored files
        vim.keymap.set('n', '<leader>fc', function()
 	  builtin.live_grep({
 	      additional_args = function(args)
