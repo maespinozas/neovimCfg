@@ -2,6 +2,7 @@ require('config.lazy')
 
 require('user.keymaps')
 require('user.exampleModule')
+require('user.myfunctions')
 
 -- Custom vim config --
 vim.opt.swapfile = false
